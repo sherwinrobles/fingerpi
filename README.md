@@ -45,8 +45,9 @@ GT-511C3     Tx (1)--|-----------------|--(10) RxD   R-Pi
 
 ### Raspberry Pi B+ (3.3 V IOs)
 I use USB To Serial CP2102 TTL UART
+
 <img src="usb_to_serial_uart.jpg" alt="USB To Serial CP2102 TTL UART" width="300"/>
-Initialized ttyUSB0
+
 
 ## Usage
 

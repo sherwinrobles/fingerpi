@@ -2,7 +2,7 @@
 
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/1cbb69065eb748f18b315ddaccad0e12/badge.svg)](https://www.quantifiedcode.com/app/project/1cbb69065eb748f18b315ddaccad0e12)
 
-Python library for GT-511C3. The library was tested on Raspberry Zero.
+Python library for GT-511C3, GT-521F52. The library was tested on Raspberry Zero.
 
 <img src="demo_code.png" alt="Code" width="300"/>
 
@@ -15,6 +15,8 @@ R-Pi GPIO pinout: https://pinout.xyz/
 
 ### Raspberry Pi Zero (40 pin, 3.3 V IOs)
 I used optional resistors in case there is [another FTDI connection](http://www.billporter.info/2011/06/26/how-to-add-multiple-uart-connections/)
+
+
 
 ```
                        (Optional)
@@ -41,9 +43,23 @@ GT-511C3     Tx (1)--|-----------------|--(10) RxD   R-Pi
 ----------------------                 ------------------------
 ```
 
+### Raspberry Pi B+ (3.3 V IOs)
+I use USB To Serial CP2102 TTL UART
+<img src="usb_to_serial_uart" alt="USB To Serial CP2102 TTL UART" width="300"/>
+Initialized ttyUSB0
+
 ## Usage
 
 Run `demo.py` for a demo
+
+Run `interactive.py` for interactive demo
+1 - Initialize
+	1 - ttyUSB0
+2 - Open
+6 - All Commands
+
+Explore menu
+
 
 ## Troubleshooting
 

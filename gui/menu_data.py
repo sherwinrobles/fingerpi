@@ -76,7 +76,7 @@ BAUDRATES = [9600,
 NOT_IMPLEMENTED = 'NOT IMPLEMENTED'
 ## NOTE: `curses.window` is passed as the first argument to every function!
 menu_data = {
-    'title': "GT-511C3 UART", 'type': MENU, 'subtitle': "Please select an option...",
+    'title': "GT-521F52 UART", 'type': MENU, 'subtitle': "Please select an option...",
     'options':[
         # { 'title': "Initialize", 'type': COMMAND, 'command': 'Initialize', 'kwargs':{} },
         { 'title': "Initialize", 'type': MENU, 'subtitle': 'Please, select the correct UART port...', 

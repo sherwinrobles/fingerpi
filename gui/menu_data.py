@@ -33,7 +33,7 @@ def _serial_ports():
     import serial
     import sys
 
-    default_port = '/dev/ttyAMA0'
+    default_port = '/dev/ttyUSB0'
 
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
@@ -98,7 +98,14 @@ menu_data = {
             { 'title': "LED on/off", 'type': COMMAND, 'command': 'CmosLed', 'kwargs':{} },
             { 'title': "Get Enroll Count", 'type': COMMAND, 'command': 'GetEnrollCount', 'kwargs':{} },
             { 'title': "Check Enrolled", 'type': COMMAND, 'command': 'CheckEnrolled', 'kwargs':{} },
+            { 'title': "Verify", 'type': COMMAND, 'command': 'Verify', 'kwargs':{} },
+            { 'title': "Identify", 'type': COMMAND, 'command': 'Identify', 'kwargs':{} },
+            { 'title': "Delete ID", 'type': COMMAND, 'command': 'DeleteID', 'kwargs':{} },
             { 'title': "Start Enrollment", 'type': COMMAND, 'command': 'EnrollStart', 'kwargs':{} },
+            { 'title': "Capture Finger", 'type': COMMAND, 'command': 'CaptureFinger', 'kwargs':{} },
+            { 'title': "First Enrollment", 'type': COMMAND, 'command': 'Enroll1', 'kwargs':{} },
+            { 'title': "Second Enrollment", 'type': COMMAND, 'command': 'Enroll2', 'kwargs':{} },
+            { 'title': "Third Enrollment", 'type': COMMAND, 'command': 'Enroll3', 'kwargs':{} },
             { 'title': "Is Finger Pressed?", 'type': COMMAND, 'command': 'IsPressFinger', 'kwargs':{} },
             { 'title': "Get Image", 'type': COMMAND, 'command': 'GetImage', 'kwargs':{} },
         ]},
@@ -345,7 +352,7 @@ class Commands():
             raise NotOpenError('Please, open the port first!')
         response = self._f.Enroll1()
         if not response[0]['ACK']:
-            if response[0]['ACK'] in errors:
+            if response[0]['ACK']:
                 err = response[0]['ACK']
             else:
                 err = 'Duplicate ID: ' + str(response[0]['ACK'])
@@ -357,7 +364,7 @@ class Commands():
             raise NotOpenError('Please, open the port first!')
         response = self._f.Enroll1()
         if not response[0]['ACK']:
-            if response[0]['ACK'] in errors:
+            if response[0]['ACK']:
                 err = response[0]['ACK']
             else:
                 err = 'Duplicate ID: ' + str(response[0]['ACK'])
@@ -369,13 +376,13 @@ class Commands():
             raise NotOpenError('Please, open the port first!')
         response = self._f.Enroll1()
         if not response[0]['ACK']:
-            if response[0]['ACK'] in errors:
+            if response[0]['ACK']:
                 err = response[0]['ACK']
             else:
                 err = 'Duplicate ID: ' + str(response[0]['ACK'])
             raise NackError(err)
         if self._f.save:
-            return [str(len(response[1]['Data'])) + ' bytes received... And purged!', None]
+            return [str(len(response[0]['Data'])) + ' bytes received... And purged!', None]
         return [None, None]
 
     def DeleteID(self, *args, **kwargs):
@@ -394,11 +401,11 @@ class Commands():
             screen.addstr(0, 1, 'Enter an ID to delete, or empty field to cancel...'[:x-2], curses.A_STANDOUT)
             ID = screen.getstr(2, 6)
             if ID.isdigit():
-                response = self._f.DeleteID(int(ID))
+                response = self._f.DeleteId(int(ID))
                 if response[0]['ACK']:
                     # screen.addstr(3, 2, 'ID in use!')
                     # screen.clrtoeol()
-                    ret[0] = 'ID {0:d} deleted'.format(ID)
+                    ret[0] = 'ID {0:d} deleted'.format(int(ID))
                     break
                 else:
                     screen.addstr(3, 2, response[0]['Parameter'])
@@ -509,4 +516,3 @@ class Commands():
                 break
         curses.noecho()
         return ret
-
